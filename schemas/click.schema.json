@@ -6,7 +6,7 @@
         "type": "string",
         "description": "A unique identifier for the click, includes the link ID"
       },
-      "ipAddress": {
+      "ip": {
         "type": "string",
         "description": "the IP address of the user that accessed the link"
       },
@@ -62,7 +62,7 @@
     "required": [
       "clickID",
       "linkID",
-      "ipAddress",
+      "ip",
       "timestamp",
       "userAgent"
     ]
