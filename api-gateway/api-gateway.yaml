@@ -1,0 +1,190 @@
+swagger: "2.0"
+info:
+  title: LinkWire API
+  description: LinkWire API
+  version: 1.0.0
+
+schemes:
+  - https
+
+paths:
+  /users/login:
+    post:
+      operationId: userLogin
+      summary: User login
+      description: Authenticate user and return user data & a JWT token.
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: Successful login, returns JWT token.
+        "401":
+          description: Unauthorized, invalid credentials.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/login
+
+    options:
+      operationId: userLogin_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the login endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/login
+
+  /users/signup:
+    post:
+      operationId: userSignup
+      summary: User signup
+      description: Register a new user and return a JWT token.
+      consumes:
+        - application/json
+      responses:
+        "201":
+          description: User created successfully, returns JWT token.
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+        "400":
+          description: Bad request, invalid user data.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/signup
+
+    options:
+      operationId: userSignup_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the signup endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/signup
+
+  /links:
+    post:
+      operationId: createLink
+      summary: Create a new link for the user
+      description: Create a new link for the specified user.
+      consumes:
+        - application/json
+      responses:
+        "201":
+          description: Link created successfully.
+        "400":
+          description: Bad request, invalid link data.
+        "404":
+          description: User not found.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/create-link
+
+    options:
+      operationId: createLink_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the user links endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/create-link
+
+  /username/{username}/links:
+    get:
+      operationId: getLinksByUsername
+      summary: Get a specific link for the user
+      description: Retrieve a specific link for the specified user.
+      responses:
+        "200":
+          description: Link retrieved successfully.
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+              title:
+                type: string
+        "404":
+          description: User or link not found.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/get-links-by-username
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+    options:
+      operationId: getLinksByUsername_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the specific user link endpoint.
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/get-links-by-username
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+  
+  /links/{linkId}:
+    get:
+      operationId: getLinkById
+      summary: Get a specific link by ID
+      description: Retrieve a specific link by its ID.
+      responses:
+        "200":
+          description: Link retrieved successfully.
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+              title:
+                type: string
+        "404":
+          description: Link not found.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/get-link-by-id
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+    options:
+      operationId: getLinkById_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the specific link by ID endpoint.
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/get-link-by-id
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+  /links/{linkId}/clicks:
+    post:
+      operationId: postClick
+      summary: Record a click on a specific link
+      description: Record a click on a specific link by its ID.
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: Click recorded successfully.
+        "404":
+          description: Link not found.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/post-click
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+    options:
+      operationId: postClick_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the link click recording endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://$FUNCTIONS_URI/post-click
+        pathTranslation: APPEND_PATH_TO_ADDRESS
