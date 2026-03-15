@@ -18,7 +18,7 @@ jobs:
 
       - name: Copy functions URI to API Gateway config
         run: |
-          sed -i "s/FUNCTIONS_URI/$FUNCTIONS_URI/g" config/api-gateway.yaml
+          sed -i "s/FUNCTIONS_URI/$FUNCTIONS_URI/g" api-gateway/api-gateway.yaml
         env:
             FUNCTIONS_URI: ${{ secrets.GCP_FUNCTIONS_URI }}
 
@@ -36,7 +36,7 @@ jobs:
 
       - name: Upload and deploy API config
         run: |
-          cd config
+          cd api-gateway
 
           TIMESTAMP=$(date +%s)
           CONFIG_NAME="api-config-$TIMESTAMP"
