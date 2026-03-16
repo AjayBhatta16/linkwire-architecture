@@ -25,7 +25,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_DEPLOYMENT_KEY }}
+          credentials_json: ${{ secrets.GCP_GATEWAY_DEPLOYMENT_KEY }}
 
       - name: Setup GCloud CLI
         uses: google-github-actions/setup-gcloud@v2
