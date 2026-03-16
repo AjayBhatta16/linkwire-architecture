@@ -101,6 +101,11 @@ paths:
       operationId: getLinksByUsername
       summary: Get a specific link for the user
       description: Retrieve a specific link for the specified user.
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
       responses:
         "200":
           description: Link retrieved successfully.
@@ -121,6 +126,11 @@ paths:
       operationId: getLinksByUsername_PF
       summary: CORS preflight request
       description: Handle CORS preflight requests for the specific user link endpoint.
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
       responses:
         "204":
           description: No content, CORS preflight successful.
@@ -133,6 +143,11 @@ paths:
       operationId: getLinkById
       summary: Get a specific link by ID
       description: Retrieve a specific link by its ID.
+      parameters:
+        - name: linkId
+          in: path
+          required: true
+          type: string
       responses:
         "200":
           description: Link retrieved successfully.
@@ -153,6 +168,11 @@ paths:
       operationId: getLinkById_PF
       summary: CORS preflight request
       description: Handle CORS preflight requests for the specific link by ID endpoint.
+      parameters:
+        - name: linkId
+          in: path
+          required: true
+          type: string
       responses:
         "204":
           description: No content, CORS preflight successful.
@@ -165,6 +185,11 @@ paths:
       operationId: postClick
       summary: Record a click on a specific link
       description: Record a click on a specific link by its ID.
+      parameters:
+        - name: linkId
+          in: path
+          required: true
+          type: string
       consumes:
         - application/json
       responses:
@@ -180,6 +205,11 @@ paths:
       operationId: postClick_PF
       summary: CORS preflight request
       description: Handle CORS preflight requests for the link click recording endpoint.
+      parameters:
+        - name: linkId
+          in: path
+          required: true
+          type: string
       consumes:
         - application/json
       responses:
