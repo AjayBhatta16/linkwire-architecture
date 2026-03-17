@@ -1,0 +1,58 @@
+name: Apply Terraform Changes to GCP
+
+on:
+  push:
+    paths:
+      - terraform/*
+      - .github/workflows/terraform-pipeline.yaml
+    branches:
+      - main
+
+env:
+  TF_WORKING_DIR: ./terraform
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Replace variables in Terraform config
+        run: |
+          sed -i "s/GCP_PROJECT_ID/$GCP_PROJECT_ID/g" terraform/terraform.tfvars
+          sed -i "s/GCP_REGION/$GCP_REGION/g" terraform/terraform.tfvars
+          sed -i "s/GCP_FUNCTION_SOURCE_BUCKET/$GCP_FUNCTION_SOURCE_BUCKET/g" terraform/terraform.tfvars
+          sed -i "s/FUNCTION_RUNNER_ACCOUNT_ID/$FUNCTION_RUNNER_ACCOUNT_ID/g" terraform/terraform.tfvars
+          sed -i "s/GCP_TERRAFORM_STATE_BUCKET/$GCP_TERRAFORM_STATE_BUCKET/g" terraform/terraform.tfvars
+        env:
+            GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_NAME }}
+            GCP_REGION: ${{ secrets.GCP_REGION }}
+            GCP_FUNCTION_SOURCE_BUCKET: ${{ secrets.GCP_FUNCTION_SOURCE_BUCKET }}
+            FUNCTION_RUNNER_ACCOUNT_ID: ${{ secrets.FUNCTION_RUNNER_ACCOUNT_ID }}
+            GCP_TERRAFORM_STATE_BUCKET: ${{ secrets.GCP_TERRAFORM_STATE_BUCKET }}
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_TERRAFORM_DEPLOYMENT_KEY }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform init
+
+      - name: Terraform Validate
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
+
+      - name: Terraform Apply
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}"

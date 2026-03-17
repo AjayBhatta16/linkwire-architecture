@@ -1,0 +1,5 @@
+project_id = "GCP_PROJECT_ID"
+region = "GCP_REGION"
+function_src_bucket_name = "GCP_FUNCTION_SOURCE_BUCKET"
+function_runner_account_id = "FUNCTION_RUNNER_ACCOUNT_ID"
+terraform_state_bucket_name = "GCP_TERRAFORM_STATE_BUCKET"
