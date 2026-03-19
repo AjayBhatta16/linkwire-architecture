@@ -26,12 +26,16 @@ jobs:
           sed -i "s/GCP_FUNCTION_SOURCE_BUCKET/$GCP_FUNCTION_SOURCE_BUCKET/g" terraform/terraform.tfvars
           sed -i "s/FUNCTION_RUNNER_ACCOUNT_ID/$FUNCTION_RUNNER_ACCOUNT_ID/g" terraform/terraform.tfvars
           sed -i "s/GCP_TERRAFORM_STATE_BUCKET/$GCP_TERRAFORM_STATE_BUCKET/g" terraform/terraform.tfvars
+          sed -i "s/API_GATEWAY_SERVICE_ACCOUNT_EMAIL/$API_GATEWAY_SERVICE_ACCOUNT_EMAIL/g" terraform/terraform.tfvars
+          sed -i "s/APP_ENGINE_SERVICE_ACCOUNT_EMAIL/$APP_ENGINE_SERVICE_ACCOUNT_EMAIL/g" terraform/terraform.tfvars
         env:
             GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_NAME }}
             GCP_REGION: ${{ secrets.GCP_REGION }}
             GCP_FUNCTION_SOURCE_BUCKET: ${{ secrets.GCP_FUNCTION_SOURCE_BUCKET }}
             FUNCTION_RUNNER_ACCOUNT_ID: ${{ secrets.FUNCTION_RUNNER_ACCOUNT_ID }}
             GCP_TERRAFORM_STATE_BUCKET: ${{ secrets.GCP_TERRAFORM_STATE_BUCKET }}
+            API_GATEWAY_SERVICE_ACCOUNT_EMAIL: ${{ secrets.API_GATEWAY_SERVICE_ACCOUNT_EMAIL }}
+            APP_ENGINE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.APP_ENGINE_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2

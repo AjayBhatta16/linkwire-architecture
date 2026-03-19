@@ -27,3 +27,15 @@ variable terraform_state_bucket_name {
   default     = ""
   description = "GCS bucket name for Terraform state storage"
 }
+
+variable api_gateway_service_account {
+  description = "Service account email used by the existing API Gateway"
+  default     = ""
+  type        = string
+}
+
+variable app_engine_service_account {
+  description = "Service account email used by the existing App Engine app"
+  default     = ""
+  type        = string
+}
