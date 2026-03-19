@@ -19,7 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Replace variables in Terraform config
+      - name: Replace variables in terraform.tfvars
         run: |
           sed -i "s/GCP_PROJECT_ID/$GCP_PROJECT_ID/g" terraform/terraform.tfvars
           sed -i "s/GCP_REGION/$GCP_REGION/g" terraform/terraform.tfvars
@@ -36,6 +36,12 @@ jobs:
             GCP_TERRAFORM_STATE_BUCKET: ${{ secrets.GCP_TERRAFORM_STATE_BUCKET }}
             API_GATEWAY_SERVICE_ACCOUNT_EMAIL: ${{ secrets.API_GATEWAY_SERVICE_ACCOUNT_EMAIL }}
             APP_ENGINE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.APP_ENGINE_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Replace variables in main.tf
+        run: |
+          sed -i "s/GCP_TERRAFORM_STATE_BUCKET/$GCP_TERRAFORM_STATE_BUCKET/g" terraform/main.tf
+        env:
+            GCP_TERRAFORM_STATE_BUCKET: ${{ secrets.GCP_TERRAFORM_STATE_BUCKET }}
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
