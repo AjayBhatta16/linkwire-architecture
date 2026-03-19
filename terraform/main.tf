@@ -91,7 +91,7 @@ resource "google_storage_bucket_object" "golang_stubs" {
 
   name   = "${each.key}.zip"
   bucket = google_storage_bucket.function_source.name
-  source = data.archive_file.golang_stub.output_path
+  source = data.archive_file.golang_function_stub.output_path
 
   lifecycle {
     ignore_changes = [source, detect_md5hash]
@@ -103,7 +103,7 @@ resource "google_storage_bucket_object" "nodejs_stubs" {
 
   name   = "${each.key}.zip"
   bucket = google_storage_bucket.function_source.name
-  source = data.archive_file.nodejs_stub.output_path
+  source = data.archive_file.nodejs_function_stub.output_path
 
   lifecycle {
     ignore_changes = [source, detect_md5hash]
