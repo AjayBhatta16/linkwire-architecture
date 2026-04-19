@@ -112,7 +112,7 @@ resource "google_storage_bucket_object" "nodejs_stubs" {
 
 # function infrastructure
 
-resource "google_cloudfunctions2_function" "golang_functions" {
+resource "google_cloudfunctions_function" "golang_functions" {
   for_each = local.golang_functions
 
   name        = each.key
@@ -135,7 +135,7 @@ resource "google_cloudfunctions2_function" "golang_functions" {
     max_instance_count = 10
     available_memory = "256M"
     timeout_seconds = 60
-    ingress_settings = "ALLOW_INTERNAL_AND_GCLB"
+    ingress_settings = "ALLOW_ALL"
     service_account_email = google_service_account.function_identity.email
   }
 
@@ -144,7 +144,7 @@ resource "google_cloudfunctions2_function" "golang_functions" {
   }
 }
 
-resource "google_cloudfunctions2_function" "nodejs_functions" {
+resource "google_cloudfunctions_function" "nodejs_functions" {
   for_each = local.nodejs_functions
 
   name        = each.key
@@ -167,7 +167,7 @@ resource "google_cloudfunctions2_function" "nodejs_functions" {
     max_instance_count = 10
     available_memory = "256M"
     timeout_seconds = 60
-    ingress_settings = "ALLOW_INTERNAL_AND_GCLB"
+    ingress_settings = "ALLOW_ALL"
     service_account_email = google_service_account.function_identity.email
   }
 
