@@ -21,7 +21,7 @@ paths:
         "401":
           description: Unauthorized, invalid credentials.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/login
+        address: https://FUNCTIONS_URI/login
 
     options:
       operationId: userLogin_PF
@@ -33,7 +33,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/login
+        address: https://FUNCTIONS_URI/login
 
   /users/signup:
     post:
@@ -53,7 +53,7 @@ paths:
         "400":
           description: Bad request, invalid user data.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/signup
+        address: https://FUNCTIONS_URI/signup
 
     options:
       operationId: userSignup_PF
@@ -65,7 +65,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/signup
+        address: https://FUNCTIONS_URI/signup
 
   /links:
     post:
@@ -82,7 +82,7 @@ paths:
         "404":
           description: User not found.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/create-link
+        address: https://FUNCTIONS_URI/create-link
 
     options:
       operationId: createLink_PF
@@ -94,7 +94,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/create-link
+        address: https://FUNCTIONS_URI/create-link
 
   /username/{username}/links:
     get:
@@ -119,7 +119,7 @@ paths:
         "404":
           description: User or link not found.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/get-links-by-username
+        address: https://FUNCTIONS_URI/get-links-by-username
         pathTranslation: APPEND_PATH_TO_ADDRESS
 
     options:
@@ -135,7 +135,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/get-links-by-username
+        address: https://FUNCTIONS_URI/get-links-by-username
         pathTranslation: APPEND_PATH_TO_ADDRESS
   
   /links/{linkId}:
@@ -161,7 +161,7 @@ paths:
         "404":
           description: Link not found.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/get-link-by-id
+        address: https://FUNCTIONS_URI/get-link-by-id
         pathTranslation: APPEND_PATH_TO_ADDRESS
 
     options:
@@ -177,7 +177,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/get-link-by-id
+        address: https://FUNCTIONS_URI/get-link-by-id
         pathTranslation: APPEND_PATH_TO_ADDRESS
 
   /links/{linkId}/clicks:
@@ -198,7 +198,7 @@ paths:
         "404":
           description: Link not found.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/post-click
+        address: https://FUNCTIONS_URI/post-click
         pathTranslation: APPEND_PATH_TO_ADDRESS
 
     options:
@@ -216,5 +216,5 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://$FUNCTIONS_URI/post-click
+        address: https://FUNCTIONS_URI/post-click
         pathTranslation: APPEND_PATH_TO_ADDRESS
