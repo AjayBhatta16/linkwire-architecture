@@ -120,7 +120,7 @@ resource "google_cloudfunctions2_function" "golang_functions" {
   location    = var.region
 
   build_config {
-    runtime     = "go123"
+    runtime     = "go126"
     entry_point = "Handler"
     source {
       storage_source {
