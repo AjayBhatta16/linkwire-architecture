@@ -36,7 +36,11 @@ data "archive_file" "golang_function_stub" {
             "net/http"
         )
 
-        func Handler(w http.ResponseWriter, r *http.Request) {
+        func init() {
+          funcframework.RegisterHTTPFunction("/", ProcessRequest)
+        }
+
+        func ProcessRequest(w http.ResponseWriter, r *http.Request) {
             fmt.Fprintln(w, "stub: not yet implemented")
         }
     EOT
@@ -112,7 +116,7 @@ resource "google_storage_bucket_object" "nodejs_stubs" {
 
 # function infrastructure
 
-resource "google_cloudfunctions_function" "golang_functions" {
+resource "google_cloudfunctions2_function" "golang_functions" {
   for_each = local.golang_functions
 
   name        = each.key
@@ -121,7 +125,7 @@ resource "google_cloudfunctions_function" "golang_functions" {
 
   build_config {
     runtime     = "go126"
-    entry_point = "Handler"
+    entry_point = "ProcessRequest"
     source {
       storage_source {
         bucket = google_storage_bucket.function_source.name
@@ -144,7 +148,7 @@ resource "google_cloudfunctions_function" "golang_functions" {
   }
 }
 
-resource "google_cloudfunctions_function" "nodejs_functions" {
+resource "google_cloudfunctions2_function" "nodejs_functions" {
   for_each = local.nodejs_functions
 
   name        = each.key
