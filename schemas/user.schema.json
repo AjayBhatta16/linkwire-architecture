@@ -34,5 +34,12 @@
       "password",
       "premiumUser",
       "links"
-    ]
-}
+    ],
+    "$example": {
+      "username": "john_doe",
+      "email": "john.doe@example.com",
+      "password": "hashed_password",
+      "premiumUser": false,
+      "links": []
+    }
+  }
