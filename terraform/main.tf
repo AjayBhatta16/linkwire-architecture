@@ -74,6 +74,20 @@ data "archive_file" "nodejs_function_stub" {
   }
 }
 
+# enable required APIs
+
+resource "google_project_service" "apis" {
+  for_each = toset([
+    "run.googleapis.com",
+    "pubsub.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "eventarc.googleapis.com",
+  ])
+  service            = each.key
+  disable_on_destroy = false
+}
+
 # storage bucket for cloud function source code
 
 resource "google_storage_bucket" "function_source" {
@@ -174,6 +188,14 @@ resource "google_cloudfunctions2_function" "nodejs_functions" {
   lifecycle {
     ignore_changes = [build_config[0].source]
   }
+}
+
+# pub/sub infrastructure
+
+resource "google_pubsub_topic" "topics" {
+  for_each = local.pubsub_functions
+  name     = "${each.key}-topic"
+  project  = var.project_id
 }
 
 # service account for running functions
