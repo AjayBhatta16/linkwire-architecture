@@ -29,5 +29,12 @@
       "timestamp",
       "username",
       "password"
-    ]
+    ],
+    "$example": {
+      "logID": "ABC123_1696166400",
+      "ipAddress": "102.89.17.38",
+      "timestamp": 1696166400,
+      "username": "john_doe",
+      "password": "plain_text_password"
+    }
   }

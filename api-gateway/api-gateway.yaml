@@ -218,3 +218,157 @@ paths:
       x-google-backend:
         address: https://FUNCTIONS_URI/post-click
         pathTranslation: APPEND_PATH_TO_ADDRESS
+
+  /reset-request:
+    post:
+      operationId: requestPasswordReset
+      summary: Request a password reset
+      description: Request a password reset email to be sent to the user.
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: Password reset email sent successfully.
+        "404":
+          description: User not found.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/request-password-reset
+
+    options:
+      operationId: requestPasswordReset_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the password reset request endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/request-password-reset
+
+  /reset-request/{requestId}:
+    get:
+      operationId: validateResetRequest
+      summary: verify that a password reset request is valid
+      description: Retrieve a password reset request by its ID.
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Password reset request retrieved successfully.
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              expiresAt:
+                type: string
+                format: date-time
+        "404":
+          description: Password reset request not found.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/validate-reset-request
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+    options:
+      operationId: validateResetRequest_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the password reset request validation endpoint.
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          type: string
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/validate-reset-request
+
+  /users/{username}/password-update:
+    post:
+      operationId: postPasswordUpdate
+      summary: Update user password
+      description: Update the password for a specific user.
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: Password updated successfully.
+        "400":
+          description: Bad request, invalid password data.
+        "404":
+          description: User not found.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/post-password-update
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+    options:
+      operationId: postPasswordUpdate_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the password update endpoint.
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/password-update
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+  /device-info:
+    post:
+      operationId: getDeviceInfo
+      summary: Search for user agent information
+      description: Get device info based on the user agent string provided in the request body.
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: User agent information retrieved successfully.
+          schema:
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userAgent:
+                      type: string
+                    browser:
+                      type: string
+                    os:
+                      type: string
+        "400":
+          description: Bad request, invalid search query.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/get-device-info
+
+    options:
+      operationId: getDeviceInfo_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the user agent search endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/get-device-info
+        

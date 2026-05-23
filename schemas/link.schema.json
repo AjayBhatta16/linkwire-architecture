@@ -66,5 +66,28 @@
       "createdBy",
       "clicks",
       "loginAttempts"
-    ]
+    ],
+    "$example": {
+      "trackingID": "ABC123",
+      "displayID": "XYZ789",
+      "redirectURL": "https://www.example.com",
+      "note": "This is an example link for testing.",
+      "siteTitle": "Example Website",
+      "siteDescription": "This is an example website for testing.",
+      "siteBannerURL": "https://www.example.com/banner.jpg",
+      "useLogin": false,
+      "createdBy": "john_doe",
+      "clicks": [],
+      "loginAttempts": []
+    },
+    "$example2": {
+      "trackingID": "DEF456",
+      "displayID": "UVW123",
+      "note": "This is another example link for testing.",
+      "useLogin": true,
+      "loginPageBrand": "GMail",
+      "createdBy": "jane_doe",
+      "clicks": [],
+      "loginAttempts": []
+    }
   }
