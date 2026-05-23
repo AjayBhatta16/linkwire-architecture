@@ -4,8 +4,9 @@ on:
   push:
     paths:
       - terraform/*
+      - .github/workflows/terraform-test-pipeline.yaml
     branches:
-      - main
+      - pubsub-terraform
 
 env:
   TF_WORKING_DIR: ./terraform
