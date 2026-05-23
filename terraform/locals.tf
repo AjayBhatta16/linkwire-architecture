@@ -4,10 +4,15 @@ locals {
     "signup",
     "create-link",
     "get-links-by-username",
-    "get-link-by-id",
+    "get-link-by-id"
   ])
 
-  nodejs_functions = toset([
+  golang_pubsub_functions = toset([
+    "process-link",
+    "send-email",
+  ])
+
+  nodejs_pubsub_functions = toset([
     "post-click",
   ])
 
@@ -23,5 +28,9 @@ locals {
     "post-click",
   ])
 
-  all_functions = setunion(local.golang_functions, local.nodejs_functions)
+  pubsub_functions = toset([
+    "post-click",
+    "process-link",
+    "send-email",
+  ])
 }
