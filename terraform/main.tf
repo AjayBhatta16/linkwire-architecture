@@ -21,6 +21,8 @@ provider "google" {
     region = var.region
 }
 
+data "google_project" "project" {}
+
 # placeholder code for cloud run functions
 
 data "archive_file" "golang_function_stub" {
@@ -101,7 +103,10 @@ resource "google_storage_bucket" "function_source" {
 }
 
 resource "google_storage_bucket_object" "golang_stubs" {
-  for_each = local.golang_functions
+  for_each = toset(concat(
+    tolist(local.golang_functions),
+    tolist(local.golang_pubsub_functions)
+  ))
 
   name   = "${each.key}.zip"
   bucket = google_storage_bucket.function_source.name
@@ -113,7 +118,7 @@ resource "google_storage_bucket_object" "golang_stubs" {
 }
 
 resource "google_storage_bucket_object" "nodejs_stubs" {
-  for_each = local.nodejs_functions
+  for_each = local.nodejs_pubsub_functions
 
   name   = "${each.key}.zip"
   bucket = google_storage_bucket.function_source.name
@@ -158,8 +163,50 @@ resource "google_cloudfunctions2_function" "golang_functions" {
   }
 }
 
-resource "google_cloudfunctions2_function" "nodejs_functions" {
-  for_each = local.nodejs_functions
+resource "google_cloudfunctions2_function" "golang_pubsub_functions" {
+  for_each = local.golang_pubsub_functions
+
+  name        = each.key
+  description = "Linkwire function: ${each.key}"
+  location    = var.region
+
+  build_config {
+    runtime     = "go126"
+    entry_point = "Handler"
+    source {
+      storage_source {
+        bucket = google_storage_bucket.function_source.name
+        object = google_storage_bucket_object.golang_stubs[each.key].name
+      }
+    }
+  }
+
+  service_config {
+    min_instance_count = 0
+    max_instance_count = 10
+    available_memory = "256M"
+    timeout_seconds = 60
+    ingress_settings = "ALLOW_INTERNAL_ONLY"
+    service_account_email = google_service_account.function_identity.email
+  }
+
+  event_trigger {
+    trigger_region        = var.region
+    event_type            = "google.cloud.pubsub.topic.v1.messagePublished"
+    pubsub_topic          = google_pubsub_topic.topics[each.key].id
+    retry_policy          = "RETRY_POLICY_RETRY"
+    service_account_email = google_service_account.function_identity.email
+  }
+
+  lifecycle {
+    ignore_changes = [build_config[0].source]
+  }
+
+  depends_on = [google_project_service.apis]
+}
+
+resource "google_cloudfunctions2_function" "nodejs_pubsub_functions" {
+  for_each = local.nodejs_pubsub_functions
 
   name        = each.key
   description = "Linkwire function: ${each.key}"
@@ -181,13 +228,23 @@ resource "google_cloudfunctions2_function" "nodejs_functions" {
     max_instance_count = 10
     available_memory = "256M"
     timeout_seconds = 60
-    ingress_settings = "ALLOW_ALL"
+    ingress_settings = "ALLOW_INTERNAL_ONLY"
+    service_account_email = google_service_account.function_identity.email
+  }
+
+  event_trigger {
+    trigger_region        = var.region
+    event_type            = "google.cloud.pubsub.topic.v1.messagePublished"
+    pubsub_topic          = google_pubsub_topic.topics[each.key].id
+    retry_policy          = "RETRY_POLICY_RETRY"
     service_account_email = google_service_account.function_identity.email
   }
 
   lifecycle {
     ignore_changes = [build_config[0].source]
   }
+
+  depends_on = [google_project_service.apis]
 }
 
 # pub/sub infrastructure
@@ -211,6 +268,20 @@ resource "google_project_iam_member" "function_firestore" {
   member  = "serviceAccount:${google_service_account.function_identity.email}"
 }
 
+# Allow Pub/Sub to invoke the Cloud Run functions
+resource "google_project_iam_member" "pubsub_run_invoker" {
+  project = var.project_id
+  role    = "roles/run.invoker"
+  member  = "serviceAccount:${google_service_account.function_identity.email}"
+}
+
+# Allow Pub/Sub to generate auth tokens (required for push delivery)
+resource "google_project_iam_member" "pubsub_token_creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
+}
+
 # IAM resource for allowing API Gateway to invoke functions
 
 resource "google_cloud_run_v2_service_iam_member" "api_gateway_invoker" {
@@ -221,16 +292,4 @@ resource "google_cloud_run_v2_service_iam_member" "api_gateway_invoker" {
   name     = google_cloudfunctions2_function.golang_functions[each.key].name
   role     = "roles/run.invoker"
   member   = "serviceAccount:${var.api_gateway_service_account}"
-}
-
-# IAM resource for allowing App Engine to invoke functions
-
-resource "google_cloud_run_v2_service_iam_member" "app_engine_invoker" {
-  for_each = local.app_engine_functions
-
-  project  = var.project_id
-  location = var.region
-  name     = google_cloudfunctions2_function.nodejs_functions[each.key].name
-  role     = "roles/run.invoker"
-  member   = "serviceAccount:${var.app_engine_service_account}"
 }
