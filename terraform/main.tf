@@ -268,6 +268,12 @@ resource "google_project_iam_member" "function_firestore" {
   member  = "serviceAccount:${google_service_account.function_identity.email}"
 }
 
+resource "google_project_iam_member" "function_pubsub_publisher" {
+  project = var.project_id
+  role    = "roles/pubsub.publisher"
+  member  = "serviceAccount:${google_service_account.function_identity.email}"
+}
+
 # Allow Pub/Sub to invoke the Cloud Run functions
 resource "google_project_iam_member" "pubsub_run_invoker" {
   project = var.project_id
