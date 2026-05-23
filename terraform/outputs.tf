@@ -4,10 +4,6 @@ output "function_urls" {
     {
       for name, fn in google_cloudfunctions2_function.golang_functions :
       name => fn.service_config[0].uri
-    },
-    {
-      for name, fn in google_cloudfunctions2_function.nodejs_functions :
-      name => fn.service_config[0].uri
     }
   )
 }

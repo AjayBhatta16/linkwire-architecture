@@ -33,6 +33,4 @@ locals {
     "process-link",
     "send-email",
   ])
-
-  all_functions = setunion(local.golang_functions, local.nodejs_functions)
 }
