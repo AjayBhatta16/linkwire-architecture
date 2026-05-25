@@ -21,5 +21,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Init
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform init
+
       - name: Force unlock Terraform state
-        run: terraform force-unlock 1779693167235828
+        run: terraform force-unlock -force 1779693167235828
