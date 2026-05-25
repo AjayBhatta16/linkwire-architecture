@@ -334,3 +334,13 @@ resource "google_cloud_run_v2_service_iam_member" "api_gateway_invoker" {
   role     = "roles/run.invoker"
   member   = "serviceAccount:${var.api_gateway_service_account}"
 }
+
+resource "google_cloud_run_v2_service_iam_member" "api_gateway_invoker" {
+  for_each = local.nodejs_functions
+
+  project  = var.project_id
+  location = var.region
+  name     = google_cloudfunctions2_function.nodejs_functions[each.key].name
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${var.api_gateway_service_account}"
+}

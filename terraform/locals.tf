@@ -32,7 +32,6 @@ locals {
     "post-password-reset-request",
     "update-user-password",
     "validate-password-reset-request",
-    "get-device-info",
   ])
 
   app_engine_functions = toset([
