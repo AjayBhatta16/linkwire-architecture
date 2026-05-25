@@ -4,12 +4,19 @@ locals {
     "signup",
     "create-link",
     "get-links-by-username",
-    "get-link-by-id"
+    "get-link-by-id",
+    "post-password-reset-request",
+    "update-user-password",
+    "validate-password-reset-request"
   ])
 
   golang_pubsub_functions = toset([
     "process-link",
     "send-email",
+  ])
+
+  nodejs_functions = toset([
+    "post-click",
   ])
 
   nodejs_pubsub_functions = toset([
