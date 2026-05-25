@@ -335,7 +335,7 @@ resource "google_cloud_run_v2_service_iam_member" "api_gateway_invoker" {
   member   = "serviceAccount:${var.api_gateway_service_account}"
 }
 
-resource "google_cloud_run_v2_service_iam_member" "api_gateway_invoker" {
+resource "google_cloud_run_v2_service_iam_member" "api_gateway_invoker_nodejs" {
   for_each = local.nodejs_functions
 
   project  = var.project_id
