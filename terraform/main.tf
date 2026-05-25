@@ -118,7 +118,10 @@ resource "google_storage_bucket_object" "golang_stubs" {
 }
 
 resource "google_storage_bucket_object" "nodejs_stubs" {
-  for_each = local.nodejs_pubsub_functions
+  for_each = toset(concat(
+    tolist(local.nodejs_functions),
+    tolist(local.nodejs_pubsub_functions)
+  ))
 
   name   = "${each.key}.zip"
   bucket = google_storage_bucket.function_source.name
@@ -205,6 +208,38 @@ resource "google_cloudfunctions2_function" "golang_pubsub_functions" {
   depends_on = [google_project_service.apis]
 }
 
+resource "google_cloudfunctions2_function" "nodejs_functions" {
+  for_each = local.nodejs_functions
+
+  name        = each.key
+  description = "Linkwire function: ${each.key}"
+  location    = var.region
+
+  build_config {
+    runtime     = "nodejs24"
+    entry_point = "handler"
+    source {
+      storage_source {
+        bucket = google_storage_bucket.function_source.name
+        object = google_storage_bucket_object.nodejs_stubs[each.key].name
+      }
+    }
+  }
+
+  service_config {
+    min_instance_count = 0
+    max_instance_count = 10
+    available_memory = "256M"
+    timeout_seconds = 60
+    ingress_settings = "ALLOW_ALL"
+    service_account_email = google_service_account.function_identity.email
+  }
+
+  lifecycle {
+    ignore_changes = [build_config[0].source]
+  }
+}
+
 resource "google_cloudfunctions2_function" "nodejs_pubsub_functions" {
   for_each = local.nodejs_pubsub_functions
 
@@ -265,6 +300,12 @@ resource "google_service_account" "function_identity" {
 resource "google_project_iam_member" "function_firestore" {
   project = var.project_id
   role    = "roles/datastore.user"
+  member  = "serviceAccount:${google_service_account.function_identity.email}"
+}
+
+resource "google_project_iam_member" "function_pubsub_publisher" {
+  project = var.project_id
+  role    = "roles/pubsub.publisher"
   member  = "serviceAccount:${google_service_account.function_identity.email}"
 }
 
