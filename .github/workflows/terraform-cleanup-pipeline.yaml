@@ -1,0 +1,25 @@
+name: Cleanup Terminated Terraform runs
+
+on:
+  push:
+    paths:
+      - .github/workflows/terraform-cleanup-pipeline.yaml
+    branches:
+      - terraform-cleanup
+
+env:
+  TF_WORKING_DIR: ./terraform
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Force unlock Terraform state
+        run: terraform force-unlock 1779693167235828
