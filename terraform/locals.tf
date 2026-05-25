@@ -16,7 +16,7 @@ locals {
   ])
 
   nodejs_functions = toset([
-    "post-click",
+    "get-device-info",
   ])
 
   nodejs_pubsub_functions = toset([
