@@ -5,7 +5,7 @@ on:
     paths:
       - .github/workflows/terraform-cleanup-pipeline.yaml
     branches:
-      - terraform-cleanup
+      - pipeline-cleanup
 
 env:
   TF_WORKING_DIR: ./terraform
