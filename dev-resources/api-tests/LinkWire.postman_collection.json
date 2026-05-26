@@ -1,0 +1,474 @@
+{
+  "info": {
+    "_postman_id": "446efe3d-88bd-4322-8e6c-c7d67e7e9cfe",
+    "name": "LinkWire",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37613605"
+  },
+  "item": [
+    {
+      "name": "Legacy API",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"test04252025_v1\",\r\n    \"password\": \"abcd1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://linkwire.cc/user/verify",
+              "protocol": "https",
+              "host": [
+                "linkwire",
+                "cc"
+              ],
+              "path": [
+                "user",
+                "verify"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetUserInfo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QwNDI1MjAyNV92MSIsImlhdCI6MTc2OTYzOTQyOSwiZXhwIjoxNzY5NjQzMDI5fQ._LwMsrXXdsDL3Lej3nAycPdk5Q5yfGyfNeIPNx0Xc9s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"test04252025_v1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5001/user/info",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "user",
+                "info"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ScrapeURL",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"url\": \"https://github.com/AjayBhatta16\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://us-east4-linkwire-urls.cloudfunctions.net/scrapeURL",
+              "protocol": "https",
+              "host": [
+                "us-east4-linkwire-urls",
+                "cloudfunctions",
+                "net"
+              ],
+              "path": [
+                "scrapeURL"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetLinkInfo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QwNDI1MjAyNV92MSIsImlhdCI6MTc2OTY0NTExOCwiZXhwIjoxNzY5NjQ4NzE4fQ.vtJbntUPZ-Uz0veFv0aKgnxys1WIBA-pubG2SwlbQn4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://linkwire.cc/links/:trackingID",
+              "protocol": "https",
+              "host": [
+                "linkwire",
+                "cc"
+              ],
+              "path": [
+                "links",
+                ":trackingID"
+              ],
+              "variable": [
+                {
+                  "key": "trackingID",
+                  "value": "D43OK2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "User CRUD Operations",
+          "item": [
+            {
+              "name": "Login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\": \"test04252025_v1\",\r\n    \"password\": \"abcd1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/users/login",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "users",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Signup",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\": \"test04192026_v1\",\r\n    \"email\": \"test04192026_v1@email.com\",\r\n    \"password\": \"abcd1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/users/signup",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "users",
+                    "signup"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Link CRUD Operations",
+          "item": [
+            {
+              "name": "GetLinksByUsername",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/username/:username/links",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "username",
+                    ":username",
+                    "links"
+                  ],
+                  "variable": [
+                    {
+                      "key": "username",
+                      "value": "test04252025_v1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CreateLink",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"redirectURL\": \"https://ajaybhattacharyya.com\",\r\n    \"note\": \"Testing Microservices v5\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/links",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "links"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GetLinkByID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/links/:linkID",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "links",
+                    ":linkID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "linkID",
+                      "value": "DNHX54"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "3rd Party Endpoints",
+          "item": [
+            {
+              "name": "IP-API",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://ip-api.com/json/:query?fields=city,regionName,country,isp,as,mobile,proxy,hosting",
+                  "protocol": "http",
+                  "host": [
+                    "ip-api",
+                    "com"
+                  ],
+                  "path": [
+                    "json",
+                    ":query"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "city,regionName,country,isp,as,mobile,proxy,hosting"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "query",
+                      "value": "169.254.1.1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Redirect Server",
+          "item": [
+            {
+              "name": "Redirect",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5001/T8S62H",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5001",
+                  "path": [
+                    "T8S62H"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Password Reset CRUD Operations",
+          "item": [
+            {
+              "name": "PostPasswordResetRequest",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"ajay.bhattacharyya.16@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/reset-request",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "reset-request"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UpdateUserPassword",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"resetRequestId\": \"b94fe966-6add-49b0-83c0-d334abbf867a\",\r\n    \"newPassword\": \"fuckscammers\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/users/:username/password-update",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "users",
+                    ":username",
+                    "password-update"
+                  ],
+                  "variable": [
+                    {
+                      "key": "username",
+                      "value": "ajay"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ValidatePasswordResetRequest",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/reset-request/:requestId",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "reset-request",
+                    ":requestId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "requestId",
+                      "value": "b94fe966-6add-49b0-83c0-d334abbf867a"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
