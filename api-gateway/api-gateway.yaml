@@ -232,7 +232,7 @@ paths:
         "404":
           description: User not found.
       x-google-backend:
-        address: https://FUNCTIONS_URI/request-password-reset
+        address: https://FUNCTIONS_URI/post-password-reset-request
 
     options:
       operationId: requestPasswordReset_PF
@@ -244,7 +244,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://FUNCTIONS_URI/request-password-reset
+        address: https://FUNCTIONS_URI/post-password-reset-request
 
   /reset-request/{requestId}:
     get:
@@ -270,7 +270,7 @@ paths:
         "404":
           description: Password reset request not found.
       x-google-backend:
-        address: https://FUNCTIONS_URI/validate-reset-request
+        address: https://FUNCTIONS_URI/validate-password-reset-request
         pathTranslation: APPEND_PATH_TO_ADDRESS
 
     options:
@@ -288,7 +288,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://FUNCTIONS_URI/validate-reset-request
+        address: https://FUNCTIONS_URI/validate-password-reset-request
 
   /users/{username}/password-update:
     post:
@@ -310,7 +310,7 @@ paths:
         "404":
           description: User not found.
       x-google-backend:
-        address: https://FUNCTIONS_URI/post-password-update
+        address: https://FUNCTIONS_URI/update-user-password
         pathTranslation: APPEND_PATH_TO_ADDRESS
 
     options:
@@ -328,7 +328,7 @@ paths:
         "204":
           description: No content, CORS preflight successful.
       x-google-backend:
-        address: https://FUNCTIONS_URI/password-update
+        address: https://FUNCTIONS_URI/update-user-password
         pathTranslation: APPEND_PATH_TO_ADDRESS
 
   /device-info:
