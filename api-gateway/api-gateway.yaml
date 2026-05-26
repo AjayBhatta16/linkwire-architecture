@@ -262,11 +262,8 @@ paths:
           schema:
             type: object
             properties:
-              email:
+              username:
                 type: string
-              expiresAt:
-                type: string
-                format: date-time
         "404":
           description: Password reset request not found.
       x-google-backend:
