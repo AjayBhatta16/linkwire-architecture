@@ -459,8 +459,43 @@
                   "variable": [
                     {
                       "key": "requestId",
-                      "value": "b94fe966-6add-49b0-83c0-d334abbf867a"
+                      "value": "93c6a2b4-9d14-4508-828e-2eb499ce5dcb"
                     }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Tools",
+          "item": [
+            {
+              "name": "GetDeviceInfo",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userAgent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://linkwire-api-8a04bdoa.uk.gateway.dev/device-info",
+                  "protocol": "https",
+                  "host": [
+                    "linkwire-api-8a04bdoa",
+                    "uk",
+                    "gateway",
+                    "dev"
+                  ],
+                  "path": [
+                    "device-info"
                   ]
                 }
               },
