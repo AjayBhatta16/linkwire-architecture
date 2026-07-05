@@ -7,7 +7,9 @@ locals {
     "get-link-by-id",
     "post-password-reset-request",
     "update-user-password",
-    "validate-password-reset-request"
+    "validate-password-reset-request",
+    "post-user-agreed-to-terms",
+    "post-contact-request",
   ])
 
   golang_pubsub_functions = toset([
@@ -32,6 +34,8 @@ locals {
     "post-password-reset-request",
     "update-user-password",
     "validate-password-reset-request",
+    "post-user-agreed-to-terms",
+    "post-contact-request",
   ])
 
   app_engine_functions = toset([

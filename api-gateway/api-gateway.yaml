@@ -67,6 +67,45 @@ paths:
       x-google-backend:
         address: https://FUNCTIONS_URI/signup
 
+  /users/{username}/agreed-to-terms:
+    post:
+      operationId: userAgreedToTerms
+      summary: Record that a user has agreed to the terms of service
+      description: Record that a specific user has agreed to the terms of service.
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: User agreement recorded successfully.
+        "404":
+          description: User not found.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/post-user-agreed-to-terms
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
+    options:
+      operationId: userAgreedToTerms_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the user agreement endpoint.
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/post-user-agreed-to-terms
+        pathTranslation: APPEND_PATH_TO_ADDRESS
+
   /links:
     post:
       operationId: createLink
@@ -368,4 +407,30 @@ paths:
           description: No content, CORS preflight successful.
       x-google-backend:
         address: https://FUNCTIONS_URI/get-device-info
-        
+  
+  /contact-request:
+    post:
+      operationId: postContactRequest
+      summary: Submit a contact request
+      description: Submit a contact request with user details and message.
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: Contact request submitted successfully.
+        "400":
+          description: Bad request, invalid contact request data.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/post-contact-request
+
+    options:
+      operationId: postContactRequest_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the contact request endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/post-contact-request
