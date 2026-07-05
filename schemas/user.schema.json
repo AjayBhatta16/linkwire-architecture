@@ -18,6 +18,10 @@
         "type": "boolean",
         "description": "An indicator for whether or not the user has access to premium features"
       },
+      "agreedToLatestTerms": {
+        "type": "boolean",
+        "description": "An indicator for whether or not the user has agreed to the latest terms and conditions"
+      },
       "links": {
         "type": "array",
         "description": "An array of unique identifiers for Link entities",
@@ -40,6 +44,7 @@
       "email": "john.doe@example.com",
       "password": "hashed_password",
       "premiumUser": false,
+      "agreedToLatestTerms": true,
       "links": []
     }
   }
