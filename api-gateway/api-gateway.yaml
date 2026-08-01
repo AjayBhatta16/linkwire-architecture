@@ -434,3 +434,30 @@ paths:
           description: No content, CORS preflight successful.
       x-google-backend:
         address: https://FUNCTIONS_URI/post-contact-request
+
+  /auth/logout:
+    post:
+      operationId: userLogout
+      summary: User logout
+      description: Invalidate the user's session and JWT token.
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: User logged out successfully.
+        "401":
+          description: Unauthorized, invalid or expired token.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/logout
+
+    options:
+      operationId: userLogout_PF
+      summary: CORS preflight request
+      description: Handle CORS preflight requests for the logout endpoint.
+      consumes:
+        - application/json
+      responses:
+        "204":
+          description: No content, CORS preflight successful.
+      x-google-backend:
+        address: https://FUNCTIONS_URI/logout

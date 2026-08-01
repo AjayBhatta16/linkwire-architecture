@@ -10,6 +10,7 @@ locals {
     "validate-password-reset-request",
     "post-user-agreed-to-terms",
     "post-contact-request",
+    "logout",
   ])
 
   golang_pubsub_functions = toset([
@@ -36,6 +37,7 @@ locals {
     "validate-password-reset-request",
     "post-user-agreed-to-terms",
     "post-contact-request",
+    "logout",
   ])
 
   app_engine_functions = toset([
